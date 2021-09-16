@@ -5,6 +5,41 @@
 // output : boolean 타입을 리터한다.
 // 주의사항 : base, sample 내에 중볻되는 요소는 없다고 가정한다.
 
+//! 최종!!
+
+
+function binarySearch(arr,target){
+    let first=0;
+    let last=arr.length-1;
+    let mid;
+
+    // first갸 last보다 크면 종료
+    while(first<=last){
+        mid=Math.floor((first+last)/2);
+        if(arr[mid]===target) return true;
+        if(arr[mid]>target) last=mid-1
+        else first=mid+1
+    }
+    return false
+}
+
+const isSubsetOf =function(base,sample){    
+    
+    // 이진검색을 사용할 예정이므로 base를 정렬한다
+    // sample 길이만큼 반복문을 돌린다.
+    // 요소가 base에 없다면 false를 리턴한다
+    // 반복문을 다 돌면true를 리턴한다.
+    
+    const sortedBase=base.sort((a,b)=>a-b);  
+    
+    for(let el of sample)
+    if(!binarySearch(sortedBase,el)) return false
+    return true
+}
+
+
+//! ---- 아래의 코드들은 답은 나오지만 time out 되는 코드들 ------
+
 // 아래의 함수는 클로저로 접근을 한 것이 아닌가?
 const isSubsetOf1=function(base,sample){
     // sample의 각 요소가 base의 요소인지 확인하면 되는 문제 
