@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset=" UTF-8" />
+    <title>MiniSerberPractice-It's client</title>
+    <style>
+      #root{
+        border:2px solid #000;
+        width:80%;
+        align-items:center;
+        display:flex;
+        justify-content: space-between;
+        
+      }
+      .input-text{
+        resize:none;
+        font-size:1.5rem;       
+        height:10ch;
+        border:2px solid #000;
+        
+      }
+      #response-wrapper{
+        font-size:2rem;
+        border:2px solid #000;
+        height:8ch;
+        width: 50%;
+        margin:0;
+     
+
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div>
+        <h2>Request</h2>
+        <textarea
+          placeholder="Enter the data you want to request to the server"
+          class="input-text"
+        ></textarea>
+        <div>
+          <button id="reverse">Reverse</button>
+          <button id="split">Split</button>
+        </div>
+      </div>
+      <div>
+        <h2>Response</h2>
+        <pre id="response-wrapper"></pre>
+      </div>
+    </div>
+    <script src="App.js"></script>
+  </body>
+</html>
