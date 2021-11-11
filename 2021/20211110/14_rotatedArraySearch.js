@@ -17,61 +17,76 @@
 // ? 그 안에서 target이 mid보다 큰 경우, 작은 경우, mid가 head보다 큰 경우 등을 조건문을 사용하여 filter 하는 방식.
 // ? -- 결과 : 마지막 Advanced Case 통과 X
 
+/* 수정사항
+! 수정사항 1  : 무한루프 방지를 위한 count , checkLimit 제거 .
+! 필요 없음. 이것때문에 마지막 인덱스가 target인 경우 -1을 return 함
+! 수정사항 2 : tail=mid , head=mid 에서 tail=mid-1 , head=mid+1로 수정
+*/
+
 const rotatedArraySearch_1 = function (rotated, target) {
   // head, mid, tail 변수 선언하고 초기값 설정
   let [head, mid, tail] = [0, 0, rotated.length - 1];
-  let checkLimit = mid;
-  let count = 0; //
 
   // target이 작은 그룹에 있는지, 큰  그룹에 있는지 알아야 한다.
   // head가 tail보다 크다면 정렬이 안되어있으므로 아래의 반복문을 진행
   if (rotated[head] > rotated[tail])
     while (tail >= head) {
-      count++;
-      checkLimit = mid; // mid 계속 같은 값인지 확인 (무한루프 방지)
       mid = Math.floor((head + tail) / 2);
-      if (checkLimit === mid) return -1; // 무한으로 돈다면 값이 없다는 뜻
-      if (target === rotated[mid]) {
-        return mid; // mid가 target이면 return mid
-      }
+      if (target === rotated[mid]) return mid; // mid가 target이면 return mid
+
       // target 이 head보다 크다면 target은 큰 그룹에 속한다.
       if (target > rotated[head]) {
         if (rotated[mid] > target)
           // mid가 target 보다 크다면, mid는 큰 그룹에 속하고 target의 우측에 있다
           // tail을 mid로 이동한다
-          tail = mid;
+          tail = mid - 1;
         else if (rotated[mid] < rotated[head])
           // target 보다 작고 head보다 작다면 mid는 작은 그룹에 있다.
           // tail을 mid로 이동한다.
-          tail = mid;
+          tail = mid - 1;
         // target 보다 작고 head보다 크다면 mid는 큰 그룹에 있고 target의 죄측에 있다.
         // head를 mid로 이동한다.
-        else head = mid;
+        else head = mid + 1;
       } else {
         // target이 head보다 작다면 작은 그룹에 속한다.
         // mid가 target 보다 작다면 mid는 작은 그룹에 있고 target의 좌측에 있다.
         if (rotated[mid] < target)
           // head를    mid로 옮긴다
-          head = mid;
+          head = mid + 1;
         else if (rotated[mid] < rotated[head])
           // mid가 target보다 크고 head보다도 작다면  작은 그룹, target 우측
           // tail을 mid로 옮긴다
-          tail = mid;
+          tail = mid - 1;
         // mid가 tartget보다 크고 head보다 크다면 큰 그룹이므로 target의 죄측
         // head를 mid로 옮긴다.
-        else head = mid;
+        else head = mid + 1;
       }
     }
-  console.log(count);
   return -1;
 };
+
+// ? ---------- TEST -----------
+let output = rotatedArraySearch([4, 5, 6, 0, 1, 2, 3], 2);
+console.log("1", output); // --> 5
+
+output = rotatedArraySearch([4, 5, 6, 0, 1, 2, 3], 100);
+
+console.log("2", output); // --> -1
+
+console.time();
+output = rotatedArraySearch([4, 5, 6, 0, 1, 2, 3], 4);
+console.timeEnd();
+console.log("3", output); // --> 0
+
+let test = rotatedArraySearch([8, 9, 1, 2, 3, 4, 5, 6, 7], 7);
+console.log("4", test); // --> 8
 
 // ! ---------방법 2 : 정렬 후 이진탐색---------------------//
 // ? 이 방법은 먼저 정렬을 하고난 후 이진탐색을 하여 찾아내는 방법
 // ? count 변수를 사용하여 몇 번 이동했는지 표시하도, 이진탐색의 결과에 count로 보완을 해주는 방법
 // ? 결과 --> 역시 마지막 test case failed\
 
-const rotatedArraySearch = function (rotated, target) {
+const rotatedArraySearch2 = function (rotated, target) {
   let [head, mid, tail] = [0, 0, rotated.length - 1];
   mid = Math.floor((head + tail) / 2);
   // count 변수를 선언하여 몇 번 이동했는지 check
@@ -102,18 +117,3 @@ const sort = (arr) => {
   }
   return { count, arr };
 };
-
-let output = rotatedArraySearch([4, 5, 6, 0, 1, 2, 3], 2);
-console.log("1", output); // --> 5
-
-output = rotatedArraySearch([4, 5, 6, 0, 1, 2, 3], 100);
-
-console.log("2", output); // --> -1
-
-console.time();
-output = rotatedArraySearch([4, 5, 6, 0, 1, 2, 3], 1);
-console.timeEnd();
-console.log("3", output);
-
-let test = rotatedArraySearch([1, 2, 3], 5);
-console.log(test);
