@@ -24,7 +24,6 @@ const result2 = removeDuplicateLetters('cbacdcbc');
 
 
 //! 1, 2, 3번 통과, 4번 Fail
-//! 'bcabc'
 const removeDuplicateLetters2 = (s) => {
   
   let strSet = new Set();
@@ -73,4 +72,3 @@ const removeDuplicateLetters2 = (s) => {
   return answer;
 }
 
-//! 둘 다 실패한 풀이임.
