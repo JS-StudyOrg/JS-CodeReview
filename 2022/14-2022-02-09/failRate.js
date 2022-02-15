@@ -53,7 +53,27 @@ N	  |   stages                 |	result
 
 */
 
-function solution(N, stages) {
-  var answer = [];
-  return answer;
+// 문제를 풀기 위해 필요한 스킬
+// 1. key - value형태의 데이터구조를 사용해야 하는데
+//    객체를 사용할 것인지, 배열을 사용할 것인지?
+// 2. 배열의 요소를 순회하는데 같은 값일 경우 묶어내고
+//    같은 값이 아닐 경우 넘어가는 방법은?
+// 3. 모든 깂이 결정되고 나서, 배열의 순서를 정렬하는 방법은? 
+   
+function solution (N, stages) {
+  let answer = [];
+  
+  // 스테이지의 갯수만큼 반복문을 돈다.
+  for (let i = 1; i <= N; i++) {
+
+    // 현재 스테이지의 실패율을 계산하기 위한 총 인원 수
+    let total = stages.filter(el => el >= i).length
+    // 현재 스테이지에 머물러 있는 사람의 수
+    let curr = stages.filter(el => el === i).length
+    // 정답 배열에 스테이지, 실패율 순으로 push한다.
+    answer.push({ 'stage' : i, 'failRate' : curr / total});
+  }
+
+  // answer배열을 실패율 내림차순으로 정렬한다.
+  return answer.sort((a,b) => b.failRate - a.failRate).map(el => el.stage);
 }
