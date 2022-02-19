@@ -93,5 +93,7 @@ function solution(N, stages) {
 let arr1 = [2, 1, 2, 6, 2, 4, 3, 3];
 let arr2 = [4, 4, 4, 4, 4];
 
+console.time();
 console.log(solution(5, arr1));
+console.timeEnd();
 console.log(solution(4, arr2));
