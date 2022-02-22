@@ -28,4 +28,42 @@ intervals[i].length == 2
  * @param {number[][]} intervals
  * @return {number[][]}
  */
-var merge = function (intervals) {};
+
+//* 검토할 시간이 부족해 시간 복잡도는 생각하지 않고 깡으로 풀이하였습니다.
+
+ var merge = function(intervals) {
+    
+  let result = [];
+  
+  if (intervals.length === 1) return intervals;
+  
+  // Sort intervals arrays in order to first element of each.
+  intervals = intervals.sort((a, b) => a[0] - b[0]);
+  
+  // pull out elements at the interval array until it's length 0.
+  while (intervals.length > 0) {
+      // pull out elements at the first of interval array. 
+      let tmp = intervals.shift();
+      let cmp;
+      
+      // When result array does not have element, pull out elements from interval array.
+      if (result.length === 0) {
+          cmp = intervals.shift();    
+      } else {
+          cmp = result.pop();
+      }
+      
+      // When tmp, cmp array do not have overlapping intervals, push it to result array.
+      if (tmp[1] < cmp[0] || tmp[0] > cmp[1]) {
+         let merge = [...tmp, ...cmp].sort((a,b) => a - b);
+         result.push([merge[0], merge[1]], [merge[2], merge[3]]);    
+      // if not, compare each elements and push it to result array.
+      } else {
+          let merge = [...tmp, ...cmp];
+          result.push([Math.min.apply(null, merge), Math.max.apply(null, merge)]);
+      }  
+  }
+  
+  return result;
+};
+
