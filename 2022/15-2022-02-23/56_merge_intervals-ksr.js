@@ -28,7 +28,7 @@ intervals[i].length == 2
  * @param {number[][]} intervals
  * @return {number[][]}
  */
-var merge = function (intervals) {
+var merge_1 = function (intervals) {
   // while  intervalse -> interval
   // if interval[0]<=end ?   // 범위에 들어가고
   //   if interval[1]>end?  // 밤위가 커진다면
@@ -61,6 +61,23 @@ var merge = function (intervals) {
       end = interval[1];
     } else if (interval[1] > end) {
       end = interval[1];
+    }
+  }
+};
+
+var merge = function (intervals) {
+  // sort
+  intervals.sort((a, b) => a[0] - b[0]);
+
+  let comp = [-1, -1];
+  let result = [];
+
+  for (const interval of intervals) {
+    if (interval[0] > comp[1]) {
+      comp = [interval[0], interval[1]];
+      result.push(comp);
+    } else {
+      comp[1] = Math.max(comp[1], interval[1]);
     }
   }
 
