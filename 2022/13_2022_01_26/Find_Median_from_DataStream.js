@@ -100,7 +100,7 @@ function sol2(progresses, speeds) {
   return answer;
 }
 //------------------------------------------------------------------------------//
-
+// 소라님의 코드를 참고한 풀이
 function sol3(progresses, speeds) {
   const answer = [];
   let time = 0;
